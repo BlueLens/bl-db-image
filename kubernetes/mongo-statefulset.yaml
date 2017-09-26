@@ -24,7 +24,7 @@ spec:
     targetPort: 27017
   clusterIP: None
   selector:
-    role: bl-db-operate
+    role: mongo
 ---
 apiVersion: apps/v1beta1
 kind: StatefulSet
@@ -37,7 +37,7 @@ spec:
   template:
     metadata:
       labels:
-        role: bl-db-operate
+        role: mongo
         environment: test
     spec:
       terminationGracePeriodSeconds: 10

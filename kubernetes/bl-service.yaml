@@ -12,4 +12,4 @@ spec:
     targetPort: 27017
     protocol: TCP
   selector:
-    role: bl-db-operate
+    role: mongo
