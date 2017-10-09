@@ -1,23 +1,10 @@
-#	Copyright 2016, Google, Inc.
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#    http:#www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: bl-db-operate
-  namespace: operating
+  name: bl-db-image
+  namespace: index
   labels:
-    name: bl-db-operate
+    name: bl-db-image
 spec:
   ports:
   - port: 27017
@@ -29,10 +16,10 @@ spec:
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
-  name: bl-db-operate
-  namespace: operating
+  name: bl-db-image
+  namespace: index
 spec:
-  serviceName: "bl-db-operate"
+  serviceName: "bl-db-image"
   replicas: 3
   template:
     metadata:
@@ -42,7 +29,7 @@ spec:
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        - name: bl-db-operate
+        - name: bl-db-image
           image: mongo
           command:
             - mongod
@@ -63,11 +50,11 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: mongo-persistent-storage
-      namespace: operating
+      namespace: index
       annotations:
-        volume.beta.kubernetes.io/storage-class: "bl-ssd"
+        volume.beta.kubernetes.io/storage-class: "bl-ssd-image"
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 100Gi
+          storage: 300Gi
